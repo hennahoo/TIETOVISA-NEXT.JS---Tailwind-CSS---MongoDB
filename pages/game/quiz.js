@@ -45,20 +45,21 @@ const Avatar = ({ playRumba }) => {
     mount.appendChild(renderer.domElement);
 
     const controls = new OrbitControls(camera, renderer.domElement);
-    camera.position.set(0, 1, 3);
+    camera.position.set(0, 1, 2); // Zoom in the avatar
 
-    const ambientLight = new THREE.AmbientLight(0x404040, 2);
+    // Brighten the lighting
+    const ambientLight = new THREE.AmbientLight(0xffffff, 3);
     scene.add(ambientLight);
 
-    const directionalLight = new THREE.DirectionalLight(0xffffff, 2);
+    const directionalLight = new THREE.DirectionalLight(0xffffff, 3);
     directionalLight.position.set(5, 10, 7.5);
     scene.add(directionalLight);
 
-    const pointLight1 = new THREE.PointLight(0xffffff, 2);
+    const pointLight1 = new THREE.PointLight(0xffffff, 3);
     pointLight1.position.set(-5, 5, 5);
     scene.add(pointLight1);
 
-    const pointLight2 = new THREE.PointLight(0xffffff, 2);
+    const pointLight2 = new THREE.PointLight(0xffffff, 3);
     pointLight2.position.set(5, -5, 5);
     scene.add(pointLight2);
 
