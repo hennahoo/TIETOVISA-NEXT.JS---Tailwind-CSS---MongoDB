@@ -85,10 +85,18 @@ const Avatar = ({ playRumba }) => {
         // Apply animations to the avatar
         animGltf.animations.forEach((clip) => {
           const action = mixer.clipAction(clip);
-          action.clampWhenFinished = true;
-          action.loop = THREE.LoopOnce;
           if (clip.name === 'Rumba') {
             rumbaActionRef.current = action;
+            rumbaActionRef.current.setLoop(THREE.LoopOnce, 1); // Ensure the Rumba animation plays only once
+            rumbaActionRef.current.clampWhenFinished = true;
+            rumbaActionRef.current.addEventListener('finished', () => {
+              console.log('Rumba animation finished. Transitioning to Idle animation.');
+              if (idleActionRef.current) {
+                idleActionRef.current.reset().fadeIn(0.5).play(); // Use fadeIn for smooth transition
+              } else {
+                console.error('Idle action is not defined when Rumba animation finishes.');
+              }
+            });
             console.log('Rumba animation loaded:', clip);
           } else if (clip.name === 'Idle') {
             idleActionRef.current = action;
@@ -122,6 +130,7 @@ const Avatar = ({ playRumba }) => {
 
   useEffect(() => {
     if (playRumba && rumbaActionRef.current) {
+      console.log('Playing Rumba animation.');
       rumbaActionRef.current.reset().play();
     }
   }, [playRumba]);
