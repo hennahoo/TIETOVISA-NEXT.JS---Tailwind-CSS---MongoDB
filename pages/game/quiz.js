@@ -31,6 +31,7 @@ const questions = [
 const Avatar = ({ playRumba }) => {
   const mountRef = useRef(null);
   const mixerRef = useRef(null);
+  const idleActionRef = useRef(null);
   const rumbaActionRef = useRef(null);
 
   useEffect(() => {
@@ -77,16 +78,6 @@ const Avatar = ({ playRumba }) => {
 
       console.log('Available animations in avatar.glb:', gltf.animations.map((clip) => clip.name));
       
-      // Play idle animation by default (if available in avatar.glb)
-      const idleClip = gltf.animations.find((clip) => clip.name === 'Idle');
-      if (idleClip) {
-        const idleAction = mixer.clipAction(idleClip);
-        idleAction.play();
-        console.log('Idle animation loaded:', idleClip);
-      } else {
-        console.error('Idle animation not found in avatar.glb');
-      }
-
       // Now load the animations from animations.glb
       loader.load('../animations.glb', (animGltf) => {
         console.log('Available animations in animations.glb:', animGltf.animations.map((clip) => clip.name));
@@ -99,6 +90,10 @@ const Avatar = ({ playRumba }) => {
           if (clip.name === 'Rumba') {
             rumbaActionRef.current = action;
             console.log('Rumba animation loaded:', clip);
+          } else if (clip.name === 'Idle') {
+            idleActionRef.current = action;
+            idleActionRef.current.play();
+            console.log('Idle animation loaded and playing:', clip);
           }
         });
       }, undefined, (error) => {
