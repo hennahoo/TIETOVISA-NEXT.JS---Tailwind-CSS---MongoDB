@@ -25,6 +25,31 @@ const questions = [
     options: ['5', '8', '9', '12'],
     correctAnswer: '8',
   },
+  {
+    question: 'Kysymys: Minkä eläimen sydän sykkii eniten kertoja minuutissa?',
+    options: ['Sinivalas', 'Kolibri', 'Gepardi', 'Kenguru'],
+    correctAnswer: 'Kolibri',
+  },
+  {
+    question: 'Missä kaupungissa on maailman korkein rakennus?',
+    options: ['New York', 'Dubai', 'Tokio', 'Shanghai'],
+    correctAnswer: 'Dubai',
+  },
+  {
+    question: 'Kuka on kirjoittanut kirjan "Tuntematon sotilas"?',
+    options: ['Mika Waltari', 'Aleksis Kivi', 'Väinö Linna', 'Tove Jansson'],
+    correctAnswer: 'Väinö Linna',
+  },
+  {
+    question: 'Mikä on maailman suurin aavikko?',
+    options: ['Sahara', 'Kalahari', 'Antarktis', 'Gobi'],
+    correctAnswer: 'Antarktis',
+  },
+  {
+    question: 'Kuinka monta luuta on ihmisen kehossa?',
+    options: ['206', '195', '220', '250'],
+    correctAnswer: '206',
+  }
   // Lisää lisää kysymyksiä tähän
 ];
 
