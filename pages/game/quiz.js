@@ -90,14 +90,6 @@ const Avatar = ({ playRumba }) => {
             rumbaActionRef.current = action;
             rumbaActionRef.current.setLoop(THREE.LoopOnce, 1); // Ensure the Rumba animation plays only once
             rumbaActionRef.current.clampWhenFinished = true;
-            rumbaActionRef.current.addEventListener('finished', () => {
-              console.log('Rumba animation finished. Transitioning to Idle animation.');
-              if (idleActionRef.current) {
-                idleActionRef.current.reset().fadeIn(0.5).play(); // Use fadeIn for smooth transition
-              } else {
-                console.error('Idle action is not defined when Rumba animation finishes.');
-              }
-            });
             console.log('Rumba animation loaded:', clip);
           } else if (clip.name === 'Idle') {
             idleActionRef.current = action;
@@ -105,6 +97,14 @@ const Avatar = ({ playRumba }) => {
             console.log('Idle animation loaded and playing:', clip);
           }
         });
+
+        mixer.addEventListener('finished', (event) => {
+          console.log('Rumba animation finished. Transitioning to Idle animation.');
+          if (idleActionRef.current && event.action === rumbaActionRef.current) {
+            idleActionRef.current.reset().fadeIn(0.5).play(); // Use fadeIn for smooth transition
+          }
+        });
+
       }, undefined, (error) => {
         console.error(error);
       });
@@ -144,6 +144,15 @@ export default function Quiz() {
   const [currentQuestion, setCurrentQuestion] = useState(0);
   const [showResult, setShowResult] = useState(false);
   const [playRumba, setPlayRumba] = useState(false);
+
+  useEffect(() => {
+    if (playRumba) {
+      const timer = setTimeout(() => {
+        setPlayRumba(false);
+      }, 1000); // Adjust the delay time as needed (in milliseconds)
+      return () => clearTimeout(timer);
+    }
+  }, [playRumba]);
 
   const handleAnswer = (selectedOption) => {
     if (selectedOption === questions[currentQuestion].correctAnswer) {
